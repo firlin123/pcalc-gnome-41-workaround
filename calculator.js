@@ -4,8 +4,16 @@ const PopupMenu = imports.ui.popupMenu;
 const ExtensionUtils = imports.misc.extensionUtils;
 
 const Me = ExtensionUtils.getCurrentExtension();
-const {NoExpression, UndefinedIdent, CantConvertNumber, Parser} = Me.imports.parser;
-const EntryMenu = Me.imports.entryMenu;
+let {NoExpression, UndefinedIdent, CantConvertNumber, Parser} = Me.imports.parser;
+let EntryMenu = Me.imports.entryMenu;
+
+function reassignGlobals() {
+  NoExpression = Me.imports.parser.NoExpression;
+  UndefinedIdent = Me.imports.parser.UndefinedIdent;
+  CantConvertNumber = Me.imports.parser.CantConvertNumber;
+  Parser = Me.imports.parser.Parser;
+  EntryMenu = Me.imports.entryMenu;
+}
 
 // Calculator-------------------------------------------------------------------
 // (calculator user interface)
@@ -13,6 +21,8 @@ const EntryMenu = Me.imports.entryMenu;
 class _Calculator extends PanelMenu.Button {
   _init () {
     super._init(0, 'Calculator', false);
+
+    reassignGlobals();
 
     this._settings = ExtensionUtils.getSettings('org.gnome.shell.extensions.pcalc');
 

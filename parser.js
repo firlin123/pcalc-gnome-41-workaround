@@ -1,11 +1,27 @@
 const ExtensionUtils = imports.misc.extensionUtils;
 
 const Me = ExtensionUtils.getCurrentExtension();
-const Lexer = Me.imports.lexer.Lexer;
-const {
+let Lexer = Me.imports.lexer.Lexer;
+let {
   TOK_UNKNOWN, TOK_END, TOK_NUM, TOK_ADD, TOK_SUB, TOK_MUL, TOK_DIV, TOK_EXP,
   TOK_LPAREN, TOK_RPAREN, TOK_IDENT, TOK_COMMA
 } = Me.imports.lexer;
+
+function reassignGlobals() {
+  Lexer = Me.imports.lexer.Lexer;
+  TOK_UNKNOWN = Me.imports.lexer.TOK_UNKNOWN;
+  TOK_END = Me.imports.lexer.TOK_END;
+  TOK_NUM = Me.imports.lexer.TOK_NUM;
+  TOK_ADD = Me.imports.lexer.TOK_ADD;
+  TOK_SUB = Me.imports.lexer.TOK_SUB;
+  TOK_MUL = Me.imports.lexer.TOK_MUL;
+  TOK_DIV = Me.imports.lexer.TOK_DIV;
+  TOK_EXP = Me.imports.lexer.TOK_EXP;
+  TOK_LPAREN = Me.imports.lexer.TOK_LPAREN;
+  TOK_RPAREN = Me.imports.lexer.TOK_RPAREN;
+  TOK_IDENT = Me.imports.lexer.TOK_IDENT;
+  TOK_COMMA = Me.imports.lexer.TOK_COMMA;
+}
 
 // Parser exceptions------------------------------------------------------------
 // note: if add or delete an exception then update imports in calculator.js
@@ -29,6 +45,7 @@ const CantConvertNumber = class CantConvertNumber {
 
 const Parser = class Parser {
   constructor () {
+    reassignGlobals();
     this._last_val = 0.0;
   }
 
